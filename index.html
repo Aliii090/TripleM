@@ -27,7 +27,6 @@ body{
   overflow-x:hidden;
 }
 
-/* HEADER */
 header{
   display:flex;
   justify-content:space-between;
@@ -50,7 +49,6 @@ nav a{
 }
 nav a:hover{color:white}
 
-/* HERO */
 .hero{
   padding:90px 20px 40px;
   text-align:center;
@@ -59,19 +57,15 @@ nav a:hover{color:white}
 .hero h1{
   font-size:3.4rem;
   margin-bottom:10px;
-  animation:fadeUp 0.8s ease;
-}
-.hero p{
-  color:var(--muted);
-  animation:fadeUp 1s ease;
 }
 
-/* SEARCH */
+.hero p{color:var(--muted)}
+
 .search{
   margin:35px auto;
   max-width:950px;
   display:grid;
-  grid-template-columns:1.5fr 1fr 1fr auto;
+  grid-template-columns:2fr 1fr 1fr auto;
   gap:10px;
   padding:14px;
   border-radius:18px;
@@ -96,7 +90,6 @@ nav a:hover{color:white}
   cursor:pointer;
 }
 
-/* LIVE ACTIVITY */
 .live{
   text-align:center;
   color:var(--muted);
@@ -104,7 +97,6 @@ nav a:hover{color:white}
   font-size:13px;
 }
 
-/* PARTNERS */
 .partners{
   text-align:center;
   margin-top:40px;
@@ -126,7 +118,6 @@ nav a:hover{color:white}
   color:var(--muted);
 }
 
-/* FLIGHTS */
 .container{
   max-width:1050px;
   margin:50px auto;
@@ -175,26 +166,6 @@ nav a:hover{color:white}
   font-weight:600;
 }
 
-/* CALENDAR */
-.calendar{
-  display:flex;
-  gap:8px;
-  margin-top:12px;
-}
-.day{
-  flex:1;
-  padding:10px;
-  border-radius:10px;
-  background:rgba(255,255,255,0.05);
-  font-size:12px;
-  text-align:center;
-  cursor:pointer;
-}
-.day.active{
-  background:var(--primary);
-}
-
-/* MODALS */
 .modal{
   position:fixed;
   inset:0;
@@ -219,6 +190,7 @@ nav a:hover{color:white}
   gap:6px;
   margin-top:15px;
 }
+
 .seat{
   background:#1f2a44;
   padding:10px;
@@ -226,6 +198,7 @@ nav a:hover{color:white}
   cursor:pointer;
   font-size:12px;
 }
+
 .seat.sel{background:var(--accent)}
 
 .ticket{
@@ -241,21 +214,20 @@ nav a:hover{color:white}
   to{opacity:1;transform:translateY(0)}
 }
 
-</style></head>
-<body><header>
+</style></head><body><header>
   <img src="Logo.png">
   <nav>
     <a href="#">Home</a>
     <a href="#flights">Flights</a>
   </nav>
 </header><section class="hero">
-  <h1>Investors-grade flight platform</h1>
+  <h1>Investor-grade flight platform</h1>
   <p>TRIPLE M × Jordanian Airlines — demo system</p>  <div class="search">
     <input value="Amman" disabled>
-    <input id="to" placeholder="Destination">
+    <input id="to" placeholder="Destination (London, Dubai, New York...)">
     <input type="date">
     <button onclick="search()">Search</button>
-  </div>  <div class="live" id="live">🔥 18 people viewing flights right now</div>
+  </div>  <div class="live" id="live">🔥 24 people viewing flights right now</div>
 </section><div class="partners">
   <div class="chips">
     <div class="chip">UAE</div>
@@ -271,13 +243,6 @@ nav a:hover{color:white}
   <div class="box">
     <h3 id="t"></h3>
     <p id="p"></p>
-    <div class="calendar">
-      <div class="day active">Mon</div>
-      <div class="day">Tue</div>
-      <div class="day">Wed</div>
-      <div class="day">Thu</div>
-      <div class="day">Fri</div>
-    </div>
     <button class="btn" onclick="seat()">Choose Seat</button>
   </div>
 </div><div class="modal" id="m2">
@@ -295,7 +260,8 @@ nav a:hover{color:white}
 </div><script>
 const data=[
 {to:"Dubai",price:180},{to:"London",price:420},{to:"Paris",price:380},
-{to:"Berlin",price:320},{to:"New York",price:750},{to:"Istanbul",price:160}
+{to:"Berlin",price:320},{to:"New York",price:750},{to:"Istanbul",price:160},
+{to:"Rome",price:300},{to:"Cairo",price:140},{to:"Tokyo",price:900}
 ];
 
 let current=null;
@@ -304,23 +270,35 @@ let seat="";
 function search(){
   const r=document.getElementById("results");
   const to=document.getElementById("to").value.toLowerCase();
+
   r.innerHTML="";
 
-  data.filter(x=>!to||x.to.toLowerCase().includes(to)).forEach(x=>{
-    const price=x.price+Math.floor(Math.random()*40);
+  const filtered=data.filter(x=>!to||x.to.toLowerCase().includes(to));
+
+  if(filtered.length===0){
+    r.innerHTML=`<div style="text-align:center;color:#94a3b8">No flights found</div>`;
+    return;
+  }
+
+  filtered.forEach(x=>{
+    const price=x.price+Math.floor(Math.random()*60);
+    const seats=Math.floor(Math.random()*5)+1;
+
     const d=document.createElement("div");
     d.className="card";
+
     d.innerHTML=`
       <div>
-        <div><b>Amman → ${x.to}</b></div>
-        <div class="small">Direct • Jordanian Airlines</div>
-        <div class="badge">limited seats</div>
+        <b>Amman → ${x.to}</b>
+        <div class="small">Direct • Jordanian Airlines Partner</div>
+        <div class="badge">${seats} seats left</div>
       </div>
       <div style="text-align:right">
         <div class="price">$${price}</div>
         <button class="btn" onclick='open1("${x.to}",${price})'>Book</button>
       </div>
     `;
+
     r.appendChild(d);
   });
 }
@@ -328,7 +306,7 @@ function search(){
 function open1(to,price){
   current={to,price};
   document.getElementById("t").innerText=`Amman → ${to}`;
-  document.getElementById("p").innerText=`$${price} estimated fare`;
+  document.getElementById("p").innerText=`Estimated fare $${price}`;
   document.getElementById("m1").style.display="flex";
 }
 
@@ -357,11 +335,11 @@ function ticket(){
   document.getElementById("m3").style.display="flex";
 
   document.getElementById("ticket").innerHTML=`
-    <b>TRIPLE M AIR</b><br><br>
+    <b>TRIPLE M FOR FLYING</b><br><br>
     Route: Amman → ${current.to}<br>
     Seat: ${seat}<br>
     Price: $${current.price}<br>
-    Status: DEMO
+    Status: CONFIRMED (DEMO)
   `;
 }
 
@@ -369,10 +347,11 @@ function closeAll(){
   document.querySelectorAll(".modal").forEach(m=>m.style.display="none");
 }
 
+search();
+
 setInterval(()=>{
   document.getElementById("live").innerText=
-  `🔥 ${10+Math.floor(Math.random()*30)} people viewing flights right now`;
+  `🔥 ${15+Math.floor(Math.random()*25)} people viewing flights right now`;
 },4000);
-
 </script></body>
 </html>
