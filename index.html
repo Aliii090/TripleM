@@ -9,9 +9,9 @@
 
 <style>
 :root {
-  --bg:#0f172a;
+  --bg:#0b1220;
   --card:#111827;
-  --primary:#3b82f6;
+  --primary:#2563eb;
   --accent:#22c55e;
   --text:#e5e7eb;
   --muted:#9ca3af;
@@ -29,7 +29,7 @@ header {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:20px 60px;
+  padding:20px 50px;
 }
 
 header img {height:45px;}
@@ -42,17 +42,13 @@ nav a {
 
 /* HERO */
 .hero {
-  height:85vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+  padding:80px 20px;
   text-align:center;
-  background:linear-gradient(135deg,#1e3a8a,#020617);
 }
 
 .hero h1 {
-  font-size:3.5rem;
+  font-size:3rem;
+  margin-bottom:10px;
 }
 
 .hero p {
@@ -61,22 +57,18 @@ nav a {
 
 /* SEARCH */
 .search-box {
-  margin-top:30px;
-  background:rgba(255,255,255,0.05);
-  padding:15px;
-  border-radius:20px;
+  margin:30px auto;
   display:grid;
   grid-template-columns:repeat(4,1fr) auto;
   gap:10px;
-  width:90%;
   max-width:900px;
 }
 
 .search-box input {
   padding:12px;
-  border:none;
   border-radius:12px;
-  background:#020617;
+  border:none;
+  background:var(--card);
   color:white;
 }
 
@@ -93,12 +85,11 @@ nav a {
 .loader {
   text-align:center;
   display:none;
-  margin-top:20px;
 }
 
 /* FLIGHTS */
 .flights {
-  max-width:1100px;
+  max-width:1000px;
   margin:40px auto;
   padding:20px;
 }
@@ -111,15 +102,15 @@ nav a {
   justify-content:space-between;
   align-items:center;
   margin-bottom:15px;
-  transition:0.3s;
+  transition:0.2s;
 }
 
 .flight-card:hover {
-  transform:translateY(-5px);
+  transform:translateY(-4px);
 }
 
 .flight-info h3 {margin:0;}
-.flight-info p {margin:5px 0;color:var(--muted);}
+.flight-info p {color:var(--muted);}
 
 .badge {
   background:#ef444420;
@@ -132,7 +123,7 @@ nav a {
 .flight-card button {
   background:var(--accent);
   border:none;
-  padding:10px 16px;
+  padding:10px;
   border-radius:10px;
   cursor:pointer;
 }
@@ -153,27 +144,12 @@ nav a {
   background:var(--card);
   padding:30px;
   border-radius:20px;
+  text-align:center;
   width:90%;
   max-width:400px;
-  text-align:center;
 }
 
-.modal button {
-  margin-top:20px;
-  padding:10px;
-  border:none;
-  background:var(--primary);
-  color:white;
-  border-radius:10px;
-}
-
-/* FOOTER */
-footer {
-  text-align:center;
-  padding:30px;
-  color:var(--muted);
-}
-
+/* MOBILE */
 @media(max-width:700px){
   .search-box {
     grid-template-columns:1fr;
@@ -193,19 +169,19 @@ footer {
 </header>
 
 <section class="hero">
-  <h1>Fly the world from Amman</h1>
-  <p>In partnership with Jordanian Airlines</p>
+  <h1>Search global flights</h1>
+  <p>Powered by TRIPLE M × Jordanian Airlines</p>
 
   <div class="search-box">
-    <input id="from" value="Amman">
-    <input id="to" placeholder="Destination">
+    <input id="from" placeholder="From (e.g. Amman)">
+    <input id="to" placeholder="To (e.g. London)">
     <input type="date" id="date">
     <input placeholder="Passengers">
     <button onclick="searchFlights()">Search</button>
   </div>
 </section>
 
-<div class="loader" id="loader">Searching global routes...</div>
+<div class="loader" id="loader">Searching best routes...</div>
 
 <section class="flights" id="flights">
   <div id="results"></div>
@@ -213,21 +189,34 @@ footer {
 
 <div class="modal" id="modal">
   <div class="modal-content">
-    <h2>Booking Simulation</h2>
-    <p>This is a demo airline site.</p>
-    <p>No real booking is processed.</p>
+    <h2>Booking Demo</h2>
+    <p>This is a simulation only.</p>
     <button onclick="closeModal()">Close</button>
   </div>
 </div>
 
-<footer>
-  TRIPLE M FOR FLYING — Demo Startup Airline UI
-</footer>
-
 <script>
+const routes = [
+  {from:'Amman',to:'Dubai',base:220},
+  {from:'Amman',to:'London',base:480},
+  {from:'Amman',to:'Paris',base:420},
+  {from:'Amman',to:'New York',base:850},
+  {from:'Amman',to:'Istanbul',base:180},
+  {from:'Amman',to:'Cairo',base:150},
+  {from:'Dubai',to:'Amman',base:220},
+  {from:'London',to:'Amman',base:480},
+  {from:'Paris',to:'Amman',base:420},
+  {from:'New York',to:'Amman',base:850},
+  {from:'Istanbul',to:'Amman',base:180},
+  {from:'Cairo',to:'Amman',base:150}
+];
+
 function searchFlights(){
   const loader = document.getElementById('loader');
   const results = document.getElementById('results');
+
+  const from = document.getElementById('from').value.toLowerCase();
+  const to = document.getElementById('to').value.toLowerCase();
 
   loader.style.display = 'block';
   results.innerHTML = '';
@@ -236,35 +225,27 @@ function searchFlights(){
 
     loader.style.display = 'none';
 
-    const to = document.getElementById('to').value.toLowerCase();
-
-    const flights = [
-      {to:'Dubai',price:220},
-      {to:'Istanbul',price:180},
-      {to:'Cairo',price:150},
-      {to:'Paris',price:420},
-      {to:'London',price:480},
-      {to:'New York',price:850},
-      {to:'Los Angeles',price:950},
-      {to:'Tokyo',price:920},
-      {to:'Berlin',price:350},
-      {to:'Rome',price:300}
-    ];
-
-    let filtered = flights.filter(f =>
-      to==='' || f.to.toLowerCase().includes(to)
+    let filtered = routes.filter(r =>
+      (from==='' || r.from.toLowerCase().includes(from)) &&
+      (to==='' || r.to.toLowerCase().includes(to))
     );
 
-    filtered.forEach(f=>{
+    if(filtered.length===0){
+      results.innerHTML = '<p>No routes found</p>';
+      return;
+    }
+
+    filtered.forEach(r=>{
       const seats = Math.floor(Math.random()*5)+1;
+      const dynamicPrice = r.base + Math.floor(Math.random()*50);
 
       const card = document.createElement('div');
-      card.className = 'flight-card';
+      card.className='flight-card';
 
       card.innerHTML = `
         <div class="flight-info">
-          <h3>Amman → ${f.to}</h3>
-          <p>$${f.price} round trip • Fees included</p>
+          <h3>${r.from} → ${r.to}</h3>
+          <p>$${dynamicPrice} round trip</p>
           <span class="badge">${seats} seats left</span>
         </div>
         <button onclick="openModal()">Select</button>
@@ -273,7 +254,7 @@ function searchFlights(){
       results.appendChild(card);
     });
 
-  },1200);
+  },1000);
 }
 
 function openModal(){
