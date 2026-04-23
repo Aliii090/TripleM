@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRIPLE M FOR FLYING</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg:#0b1220;
+    --card:#1a2238;
+    --primary:#2a5298;
+    --accent:#00c896;
+    --text:white;
+}
+body.light {
+    --bg:#f5f5f5;
+    --card:#ffffff;
+    --text:#111;
+}
+body {
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    transition:0.3s;
+}
+header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 40px;
+    background:rgba(0,0,0,0.4);
+    backdrop-filter:blur(10px);
+}
+header img {height:50px;}
+nav a {margin-left:20px;text-decoration:none;color:var(--text);} 
+.toggle {
+    cursor:pointer;
+    padding:8px 12px;
+    background:var(--primary);
+    border-radius:10px;
+}
+.hero {
+    height:90vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    background:linear-gradient(135deg,#1e3c72,#2a5298);
+}
+.hero h1 {font-size:3rem;}
+.search-box {
+    margin-top:20px;
+    background:white;
+    color:black;
+    padding:20px;
+    border-radius:15px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+.search-box input, .search-box button {
+    padding:10px;
+    border-radius:10px;
+    border:none;
+}
+.search-box button {
+    background:var(--primary);
+    color:white;
+    cursor:pointer;
+}
+.flights {padding:40px;}
+.flight-card {
+    background:var(--card);
+    margin:15px 0;
+    padding:20px;
+    border-radius:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    animation:fadeIn 0.6s ease;
+}
+.flight-card button {
+    background:var(--accent);
+    border:none;
+    padding:10px;
+    border-radius:10px;
+    cursor:pointer;
+}
+.badge {
+    background:red;
+    padding:5px 10px;
+    border-radius:10px;
+    font-size:12px;
+    margin-left:10px;
+}
+.loader {
+    display:none;
+    text-align:center;
+    padding:20px;
+}
+@keyframes fadeIn {
+    from{opacity:0;transform:translateY(15px);} 
+    to{opacity:1;transform:translateY(0);} 
+}
+footer {text-align:center;padding:20px;background:#111;margin-top:40px;}
+</style>
+</head>
+<body>
+<header>
+    <img src="Logo.png">
+    <nav>
+        <a href="#">Home</a>
+        <a href="#flights">Flights</a>
+        <span class="toggle" onclick="toggleMode()">Toggle Mode</span>
+    </nav>
+</header><section class="hero">
+    <h1>TRIPLE M FOR FLYING</h1>
+    <p>Cheap flights. Low fees. No stress.</p><div class="search-box">
+    <input type="text" id="from" placeholder="From">
+    <input type="text" id="to" placeholder="To">
+    <input type="date" id="date">
+    <button onclick="searchFlights()">Search</button>
+</div>
+
+</section><div class="loader" id="loader">Searching flights...</div><section class="flights" id="flights">
+    <h2>Available Flights</h2>
+    <div id="results"></div>
+</section><footer>
+<p>© 2026 TRIPLE M FOR FLYING - Demo Only</p>
+</footer><script>
+function toggleMode(){
+    document.body.classList.toggle('light');
+}
+
+function searchFlights(){
+    const loader=document.getElementById('loader');
+    const results=document.getElementById('results');
+    loader.style.display='block';
+    results.innerHTML='';
+
+    setTimeout(()=>{
+        loader.style.display='none';
+
+        const from=document.getElementById('from').value.toLowerCase();
+        const to=document.getElementById('to').value.toLowerCase();
+
+        const flights=[
+            {from:'Amman',to:'Dubai',price:45},
+            {from:'Amman',to:'Istanbul',price:60},
+            {from:'Amman',to:'Cairo',price:35},
+            {from:'Amman',to:'Paris',price:120},
+            {from:'Amman',to:'London',price:150}
+        ];
+
+        let filtered=flights.filter(f=>
+            (from===''||f.from.toLowerCase().includes(from)) &&
+            (to===''||f.to.toLowerCase().includes(to))
+        );
+
+        if(filtered.length===0){
+            results.innerHTML='<p>No flights found</p>';
+            return;
+        }
+
+        filtered.forEach(f=>{
+            const seats=Math.floor(Math.random()*5)+1;
+            const card=document.createElement('div');
+            card.className='flight-card';
+
+            card.innerHTML=`
+            <div>
+                <h3>${f.from} → ${f.to}</h3>
+                <p>$${f.price} + $5 fees</p>
+                <span class="badge">${seats} seats left</span>
+            </div>
+            <button onclick="alert('Demo only - cannot book')">Select</button>
+            `;
+
+            results.appendChild(card);
+        });
+
+    },1000);
+}
+</script></body>
+</html>
