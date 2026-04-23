@@ -1,14 +1,1428 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="https://base44.com/logo_v2.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="manifest" href="/manifest.json" />
-    <title>Base44 APP</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRIPLE M FOR FLYING | Jordanian Airlines Partner</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg-primary:#0a0e1a;--bg-secondary:#111827;--bg-card:rgba(17,24,39,0.7);
+  --glass:rgba(255,255,255,0.05);--glass-border:rgba(255,255,255,0.1);
+  --text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-muted:#64748b;
+  --accent:#0ea5e9;--accent-glow:rgba(14,165,233,0.3);--accent-dark:#0284c7;
+  --success:#10b981;--warning:#f59e0b;--error:#ef4444;
+  --gold:#d4a843;--gold-glow:rgba(212,168,67,0.3);
+  --radius:12px;--radius-lg:20px;--radius-sm:8px;
+  --shadow:0 8px 32px rgba(0,0,0,0.3);--shadow-lg:0 16px 48px rgba(0,0,0,0.4);
+  --transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  --font-display:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);
+  min-height:100vh;overflow-x:hidden;line-height:1.6;
+}
+body::before{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  background:radial-gradient(ellipse at 20% 20%,rgba(14,165,233,0.08) 0%,transparent 50%),
+             radial-gradient(ellipse at 80% 80%,rgba(212,168,67,0.06) 0%,transparent 50%),
+             radial-gradient(ellipse at 50% 50%,rgba(14,165,233,0.03) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg-primary)}
+::-webkit-scrollbar-thumb{background:var(--text-muted);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-secondary)}
+
+/* ===== HEADER ===== */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(10,14,26,0.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--glass-border);
+  transition:var(--transition);
+}
+.header.scrolled{background:rgba(10,14,26,0.95);box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+.header-inner{
+  max-width:1280px;margin:0 auto;padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;height:72px;
+}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-icon{
+  width:44px;height:44px;border-radius:10px;
+  background:linear-gradient(135deg,var(--accent),var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:800;color:var(--bg-primary);
+}
+.logo-text{display:flex;flex-direction:column}
+.logo-brand{font-size:16px;font-weight:700;letter-spacing:1.5px;color:var(--text-primary)}
+.logo-sub{font-size:10px;letter-spacing:2px;color:var(--gold);font-weight:500}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{
+  color:var(--text-secondary);text-decoration:none;font-size:14px;
+  font-weight:500;transition:var(--transition);position:relative;
+}
+.nav-links a:hover{color:var(--text-primary)}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;
+  background:var(--accent);transition:var(--transition);
+}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+  padding:10px 24px!important;background:linear-gradient(135deg,var(--accent),var(--accent-dark))!important;
+  border-radius:var(--radius-sm)!important;color:var(--text-primary)!important;
+  font-weight:600!important;letter-spacing:0.5px;
+}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 16px var(--accent-glow)!important}
+
+/* Mobile menu */
+.mobile-toggle{display:none;background:none;border:none;color:var(--text-primary);font-size:24px;cursor:pointer}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  position:relative;padding:120px 24px 80px;
+}
+.hero-bg{
+  position:absolute;inset:0;overflow:hidden;
+}
+.hero-bg .plane-path{
+  position:absolute;width:200px;height:200px;opacity:0.15;
+  animation:flyAcross 20s linear infinite;
+}
+@keyframes flyAcross{
+  0%{transform:translate(-200px,100px) rotate(-5deg)}
+  50%{transform:translate(calc(100vw + 200px),50px) rotate(-5deg)}
+  51%{transform:translate(calc(100vw + 200px),50px) rotate(175deg)}
+  100%{transform:translate(-200px,100px) rotate(175deg)}
+}
+.hero-content{
+  max-width:800px;text-align:center;position:relative;z-index:1;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 20px;border-radius:50px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  font-size:13px;color:var(--gold);font-weight:500;
+  margin-bottom:32px;animation:fadeInUp 0.8s ease;
+}
+.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--success);animation:pulse 2s infinite}
+.hero h1{
+  font-size:clamp(36px,6vw,64px);font-weight:800;line-height:1.1;
+  margin-bottom:24px;animation:fadeInUp 0.8s ease 0.1s both;
+}
+.hero h1 .gradient{
+  background:linear-gradient(135deg,var(--accent),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero p{
+  font-size:18px;color:var(--text-secondary);max-width:560px;margin:0 auto 48px;
+  animation:fadeInUp 0.8s ease 0.2s both;
+}
+
+/* Search Box */
+.search-box{
+  background:var(--bg-card);backdrop-filter:blur(20px);
+  border:1px solid var(--glass-border);border-radius:var(--radius-lg);
+  padding:32px;box-shadow:var(--shadow-lg);
+  animation:fadeInUp 0.8s ease 0.3s both;
+}
+.search-row{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
+.search-field{flex:1;min-width:200px;position:relative}
+.search-field label{
+  display:block;font-size:12px;font-weight:600;letter-spacing:1px;
+  color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;
+}
+.search-field .input-wrap{
+  position:relative;display:flex;align-items:center;
+}
+.search-field .input-icon{
+  position:absolute;left:14px;color:var(--text-muted);font-size:16px;pointer-events:none;
+}
+.search-field input{
+  width:100%;padding:14px 14px 14px 42px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:var(--radius-sm);color:var(--text-primary);
+  font-size:15px;font-family:var(--font-body);
+  transition:var(--transition);outline:none;
+}
+.search-field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.search-field input::placeholder{color:var(--text-muted)}
+.origin-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 14px;background:rgba(14,165,233,0.1);
+  border:1px solid rgba(14,165,233,0.2);border-radius:6px;
+  font-size:13px;color:var(--accent);font-weight:500;
+}
+.search-btn{
+  padding:14px 40px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+  border:none;border-radius:var(--radius-sm);color:white;
+  font-size:15px;font-weight:600;cursor:pointer;
+  transition:var(--transition);white-space:nowrap;
+  display:flex;align-items:center;gap:8px;
+}
+.search-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--accent-glow)}
+.search-btn:active{transform:translateY(0)}
+.search-btn.loading{pointer-events:none;opacity:0.8}
+
+/* Autocomplete */
+.autocomplete-list{
+  position:absolute;top:100%;left:0;right:0;z-index:50;
+  background:var(--bg-secondary);border:1px solid var(--glass-border);
+  border-radius:var(--radius-sm);margin-top:4px;
+  max-height:280px;overflow-y:auto;box-shadow:var(--shadow-lg);
+  display:none;
+}
+.autocomplete-list.active{display:block}
+.autocomplete-item{
+  padding:12px 16px;cursor:pointer;transition:var(--transition);
+  display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--glass-border);
+}
+.autocomplete-item:last-child{border-bottom:none}
+.autocomplete-item:hover{background:var(--glass)}
+.autocomplete-item .city-name{font-weight:600;font-size:14px}
+.autocomplete-item .country-name{font-size:12px;color:var(--text-muted)}
+.autocomplete-item .region-tag{
+  margin-left:auto;font-size:11px;padding:2px 8px;
+  border-radius:4px;background:rgba(14,165,233,0.1);color:var(--accent);
+}
+
+/* ===== PARTNER SECTION ===== */
+.partner-section{
+  padding:80px 24px;position:relative;z-index:1;
+}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header h2{font-size:32px;font-weight:700;margin-bottom:12px}
+.section-header p{color:var(--text-secondary);font-size:16px;max-width:500px;margin:0 auto}
+.partner-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:16px;max-width:1000px;margin:0 auto;
+}
+.partner-card{
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:var(--radius);padding:20px 16px;text-align:center;
+  transition:var(--transition);cursor:default;
+}
+.partner-card:hover{
+  transform:translateY(-4px);border-color:var(--accent);
+  box-shadow:0 8px 24px rgba(14,165,233,0.15);
+}
+.partner-flag{font-size:32px;margin-bottom:8px;display:block}
+.partner-name{font-size:13px;font-weight:600;color:var(--text-primary)}
+.partner-region{font-size:11px;color:var(--text-muted);margin-top:2px}
+
+/* ===== RESULTS SECTION ===== */
+.results-section{
+  padding:0 24px 80px;max-width:1280px;margin:0 auto;
+  position:relative;z-index:1;display:none;
+}
+.results-section.active{display:block}
+.results-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:24px;flex-wrap:wrap;gap:12px;
+}
+.results-header h2{font-size:24px;font-weight:700}
+.results-count{color:var(--text-secondary);font-size:14px}
+.sort-controls{display:flex;gap:8px}
+.sort-btn{
+  padding:6px 14px;background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:6px;color:var(--text-secondary);font-size:13px;
+  cursor:pointer;transition:var(--transition);font-family:var(--font-body);
+}
+.sort-btn.active{background:var(--accent);color:white;border-color:var(--accent)}
+.sort-btn:hover:not(.active){border-color:var(--text-muted)}
+
+/* Flight Card */
+.flight-card{
+  background:var(--bg-card);backdrop-filter:blur(12px);
+  border:1px solid var(--glass-border);border-radius:var(--radius-lg);
+  padding:28px;margin-bottom:16px;transition:var(--transition);
+  position:relative;overflow:hidden;
+}
+.flight-card:hover{
+  border-color:var(--accent);transform:translateY(-2px);
+  box-shadow:0 12px 32px rgba(14,165,233,0.12);
+}
+.flight-card.best-price{border-color:var(--gold)}
+.flight-card.best-price::before{
+  content:'BEST PRICE TODAY';position:absolute;top:16px;right:-28px;
+  background:linear-gradient(135deg,var(--gold),#c4952e);color:var(--bg-primary);
+  font-size:10px;font-weight:700;letter-spacing:1px;padding:4px 36px;
+  transform:rotate(45deg);
+}
+.flight-main{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.flight-route{flex:1;min-width:200px}
+.flight-dest{font-size:22px;font-weight:700;margin-bottom:4px}
+.flight-dest-sub{font-size:13px;color:var(--text-muted)}
+.flight-details{display:flex;gap:32px;align-items:center;flex-wrap:wrap}
+.flight-detail{text-align:center}
+.flight-detail .label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.flight-detail .value{font-size:16px;font-weight:600}
+.flight-price-col{text-align:right;min-width:120px}
+.flight-price{font-size:28px;font-weight:800;color:var(--accent)}
+.flight-price-note{font-size:11px;color:var(--text-muted)}
+.flight-meta{
+  display:flex;gap:16px;margin-top:16px;padding-top:16px;
+  border-top:1px solid var(--glass-border);align-items:center;flex-wrap:wrap;
+}
+.viewers-counter{
+  display:flex;align-items:center;gap:6px;font-size:12px;color:var(--warning);
+}
+.viewers-counter .eye{animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.seats-badge{
+  font-size:12px;padding:4px 10px;border-radius:4px;font-weight:600;
+}
+.seats-badge.low{background:rgba(239,68,68,0.15);color:var(--error)}
+.seats-badge.medium{background:rgba(245,158,11,0.15);color:var(--warning)}
+.seats-badge.high{background:rgba(16,185,129,0.15);color:var(--success)}
+.book-btn{
+  margin-left:auto;padding:12px 28px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+  border:none;border-radius:var(--radius-sm);color:white;
+  font-size:14px;font-weight:600;cursor:pointer;
+  transition:var(--transition);font-family:var(--font-body);
+}
+.book-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px var(--accent-glow)}
+
+/* Empty State */
+.empty-state{
+  text-align:center;padding:80px 24px;
+}
+.empty-state .icon{font-size:64px;margin-bottom:16px;opacity:0.5}
+.empty-state h3{font-size:20px;font-weight:600;margin-bottom:8px}
+.empty-state p{color:var(--text-secondary);font-size:14px}
+
+/* ===== BOOKING MODAL ===== */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);
+  z-index:200;display:none;align-items:center;justify-content:center;
+  padding:24px;overflow-y:auto;
+}
+.modal-overlay.active{display:flex}
+.modal{
+  background:var(--bg-secondary);border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);width:100%;max-width:640px;
+  box-shadow:var(--shadow-lg);position:relative;
+  animation:modalIn 0.3s ease;
+}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-header{
+  padding:24px 28px;border-bottom:1px solid var(--glass-border);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.modal-header h2{font-size:20px;font-weight:700}
+.modal-close{
+  background:none;border:none;color:var(--text-muted);font-size:24px;
+  cursor:pointer;transition:var(--transition);width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;border-radius:8px;
+}
+.modal-close:hover{background:var(--glass);color:var(--text-primary)}
+.modal-body{padding:28px}
+
+/* Steps */
+.steps-bar{
+  display:flex;gap:0;margin-bottom:32px;position:relative;
+}
+.step-item{
+  flex:1;text-align:center;position:relative;padding-bottom:12px;
+}
+.step-item::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:var(--glass);border-radius:2px;
+}
+.step-item::after{
+  content:'';position:absolute;bottom:0;left:0;height:3px;
+  background:var(--accent);border-radius:2px;
+  width:0;transition:width 0.4s ease;
+}
+.step-item.completed::after{width:100%}
+.step-item.active::after{width:50%}
+.step-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:50%;font-size:13px;font-weight:700;
+  background:var(--glass);border:2px solid var(--glass-border);
+  color:var(--text-muted);margin-bottom:8px;transition:var(--transition);
+}
+.step-item.active .step-num,.step-item.completed .step-num{
+  background:var(--accent);border-color:var(--accent);color:white;
+}
+.step-label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
+.step-item.active .step-label{color:var(--text-primary)}
+
+/* Step Content */
+.step-content{display:none;animation:fadeIn 0.3s ease}
+.step-content.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Date Selection */
+.calendar{max-width:360px;margin:0 auto}
+.calendar-header{
+  display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;
+}
+.calendar-header h3{font-size:16px;font-weight:600}
+.cal-nav{
+  background:var(--glass);border:1px solid var(--glass-border);
+  color:var(--text-secondary);width:36px;height:36px;border-radius:8px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:var(--transition);font-size:16px;
+}
+.cal-nav:hover{background:var(--accent);color:white;border-color:var(--accent)}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cal-day-header{font-size:11px;color:var(--text-muted);padding:8px 0;font-weight:600}
+.cal-day{
+  padding:10px;border-radius:8px;cursor:pointer;transition:var(--transition);
+  font-size:14px;font-weight:500;
+}
+.cal-day:hover{background:var(--glass)}
+.cal-day.other-month{color:var(--text-muted);opacity:0.3;pointer-events:none}
+.cal-day.today{border:1px solid var(--accent)}
+.cal-day.selected{background:var(--accent);color:white}
+.cal-day.past{opacity:0.3;pointer-events:none}
+
+/* Seat Selection */
+.plane-container{max-width:400px;margin:0 auto}
+.plane-header{text-align:center;margin-bottom:20px}
+.plane-header h3{font-size:16px;font-weight:600;margin-bottom:4px}
+.plane-legend{display:flex;gap:16px;justify-content:center;font-size:12px;color:var(--text-secondary)}
+.plane-legend span{display:flex;align-items:center;gap:4px}
+.legend-dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+.legend-dot.available{background:var(--glass);border:1px solid var(--glass-border)}
+.legend-dot.selected{background:var(--accent)}
+.legend-dot.occupied{background:var(--text-muted);opacity:0.4}
+.plane-body{
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);padding:24px 16px;position:relative;
+}
+.plane-nose{
+  width:60px;height:30px;background:var(--glass);border:1px solid var(--glass-border);
+  border-bottom:none;border-radius:30px 30px 0 0;margin:0 auto 8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:var(--text-muted);letter-spacing:1px;
+}
+.seat-row{
+  display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:6px;
+}
+.seat-row .row-label{
+  width:20px;font-size:11px;color:var(--text-muted);text-align:center;font-weight:600;
+}
+.seat{
+  width:36px;height:36px;border-radius:6px;border:1px solid var(--glass-border);
+  background:var(--glass);cursor:pointer;transition:var(--transition);
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:var(--text-muted);font-weight:600;
+}
+.seat:hover:not(.occupied){border-color:var(--accent);background:rgba(14,165,233,0.1)}
+.seat.selected{background:var(--accent);border-color:var(--accent);color:white}
+.seat.occupied{background:var(--text-muted);opacity:0.2;cursor:not-allowed;pointer-events:none}
+.seat-aisle{width:24px}
+.selected-seat-info{
+  text-align:center;margin-top:16px;padding:12px;
+  background:rgba(14,165,233,0.1);border-radius:var(--radius-sm);
+  font-size:14px;color:var(--accent);font-weight:600;
+}
+
+/* Passenger Info */
+.passenger-form{max-width:400px;margin:0 auto}
+.form-group{margin-bottom:20px}
+.form-group label{
+  display:block;font-size:12px;font-weight:600;letter-spacing:0.5px;
+  color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;
+}
+.form-group input{
+  width:100%;padding:12px 14px;background:var(--glass);
+  border:1px solid var(--glass-border);border-radius:var(--radius-sm);
+  color:var(--text-primary);font-size:14px;font-family:var(--font-body);
+  transition:var(--transition);outline:none;
+}
+.form-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+
+/* Modal Footer */
+.modal-footer{
+  padding:20px 28px;border-top:1px solid var(--glass-border);
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+.btn-back{
+  padding:12px 24px;background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:var(--radius-sm);color:var(--text-secondary);
+  font-size:14px;font-weight:600;cursor:pointer;transition:var(--transition);
+  font-family:var(--font-body);
+}
+.btn-back:hover{border-color:var(--text-muted);color:var(--text-primary)}
+.btn-next{
+  padding:12px 28px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+  border:none;border-radius:var(--radius-sm);color:white;
+  font-size:14px;font-weight:600;cursor:pointer;transition:var(--transition);
+  font-family:var(--font-body);margin-left:auto;
+}
+.btn-next:hover{transform:translateY(-1px);box-shadow:0 6px 20px var(--accent-glow)}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* ===== BOARDING PASS ===== */
+.boarding-pass{
+  background:#fff;color:#1a1a2e;border-radius:var(--radius-lg);
+  overflow:hidden;max-width:520px;margin:0 auto;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+}
+.bp-header{
+  background:linear-gradient(135deg,#0ea5e9,#0284c7);padding:20px 24px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.bp-airline{font-size:18px;font-weight:800;color:white;letter-spacing:1px}
+.bp-flight-no{font-size:14px;font-weight:600;color:rgba(255,255,255,0.8)}
+.bp-body{padding:24px}
+.bp-row{display:flex;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.bp-field{flex:1;min-width:80px}
+.bp-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
+.bp-value{font-size:16px;font-weight:700;color:#1a1a2e}
+.bp-value.large{font-size:22px}
+.bp-divider{
+  border:none;border-top:2px dashed #ddd;margin:16px 0;
+  position:relative;
+}
+.bp-divider::before,.bp-divider::after{
+  content:'';position:absolute;top:-12px;width:24px;height:24px;
+  background:#f8f8f8;border-radius:50%;
+}
+.bp-divider::before{left:-36px}
+.bp-divider::after{right:-36px}
+.bp-barcode{
+  text-align:center;padding:16px 0 8px;
+  font-family:'Courier New',monospace;font-size:24px;letter-spacing:4px;
+  color:#1a1a2e;font-weight:700;
+}
+.bp-barcode-lines{
+  display:flex;justify-content:center;gap:2px;margin:8px auto;max-width:300px;
+}
+.bp-barcode-lines span{
+  display:block;height:40px;background:#1a1a2e;
+}
+.bp-barcode-lines span:nth-child(odd){width:2px}
+.bp-barcode-lines span:nth-child(even){width:1px;background:transparent}
+.bp-footer{
+  background:#f8f8f8;padding:12px 24px;text-align:center;
+  font-size:11px;color:#888;
+}
+.bp-download{
+  display:block;margin:20px auto 0;padding:12px 32px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+  border:none;border-radius:var(--radius-sm);color:white;
+  font-size:14px;font-weight:600;cursor:pointer;transition:var(--transition);
+  font-family:var(--font-body);
+}
+.bp-download:hover{transform:translateY(-1px);box-shadow:0 6px 20px var(--accent-glow)}
+
+/* ===== LOADING ===== */
+.loader{
+  display:none;text-align:center;padding:60px 24px;
+}
+.loader.active{display:block}
+.loader-spinner{
+  width:48px;height:48px;border:3px solid var(--glass-border);
+  border-top-color:var(--accent);border-radius:50%;
+  margin:0 auto 16px;animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader p{color:var(--text-secondary);font-size:14px}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.animate-in{animation:fadeInUp 0.5s ease both}
+.animate-in:nth-child(1){animation-delay:0s}
+.animate-in:nth-child(2){animation-delay:0.05s}
+.animate-in:nth-child(3){animation-delay:0.1s}
+.animate-in:nth-child(4){animation-delay:0.15s}
+.animate-in:nth-child(5){animation-delay:0.2s}
+
+/* ===== FOOTER ===== */
+.footer{
+  padding:48px 24px;border-top:1px solid var(--glass-border);
+  position:relative;z-index:1;
+}
+.footer-inner{
+  max-width:1280px;margin:0 auto;display:flex;
+  justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+}
+.footer-brand{font-size:14px;font-weight:600;color:var(--text-secondary)}
+.footer-brand span{color:var(--gold)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:var(--text-muted);text-decoration:none;font-size:13px;transition:var(--transition)}
+.footer-links a:hover{color:var(--text-primary)}
+.footer-disclaimer{width:100%;text-align:center;font-size:11px;color:var(--text-muted);margin-top:16px}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .mobile-toggle{display:block}
+  .nav-links.open{
+    display:flex;flex-direction:column;position:absolute;
+    top:72px;left:0;right:0;background:rgba(10,14,26,0.98);
+    padding:24px;gap:20px;border-bottom:1px solid var(--glass-border);
+  }
+  .search-row{flex-direction:column}
+  .search-field{min-width:100%}
+  .flight-main{flex-direction:column;align-items:flex-start}
+  .flight-details{width:100%;justify-content:space-between}
+  .flight-price-col{text-align:left;min-width:auto}
+  .flight-meta{flex-direction:column;align-items:flex-start}
+  .book-btn{width:100%;text-align:center;margin-left:0;margin-top:8px}
+  .partner-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
+  .modal{margin:16px;max-height:90vh;overflow-y:auto}
+  .seat{width:30px;height:30px;font-size:9px}
+  .bp-value.large{font-size:18px}
+}
+@media(max-width:480px){
+  .hero h1{font-size:28px}
+  .search-box{padding:20px}
+  .flight-card{padding:20px}
+  .steps-bar{gap:0}
+  .step-label{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header" id="header">
+  <div class="header-inner">
+    <a href="#" class="logo" onclick="goHome()">
+      <div class="logo-icon">MM</div>
+      <div class="logo-text">
+        <span class="logo-brand">TRIPLE M FOR FLYING</span>
+        <span class="logo-sub">JORDANIAN AIRLINES PARTNER</span>
+      </div>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#search-section">Flights</a>
+      <a href="#partners">Partners</a>
+      <a href="#" class="nav-cta" onclick="scrollToSearch()">Book Now</a>
+    </nav>
+    <button class="mobile-toggle" id="mobileToggle" onclick="toggleNav()">&#9776;</button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="search-section">
+  <div class="hero-bg">
+    <div class="plane-path">&#9992;</div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> Now flying from Amman worldwide</div>
+    <h1>Fly the World from <span class="gradient">Amman</span></h1>
+    <p>Discover incredible destinations at unbeatable prices with TRIPLE M FOR FLYING, your trusted Jordanian Airlines partner.</p>
+    <div class="search-box">
+      <div class="search-row">
+        <div class="search-field">
+          <label>From</label>
+          <div class="origin-badge">&#9992; Amman (AMM)</div>
+        </div>
+        <div class="search-field">
+          <label>Where to?</label>
+          <div class="input-wrap">
+            <span class="input-icon">&#128269;</span>
+            <input type="text" id="destInput" placeholder="Search destinations..." autocomplete="off" oninput="handleDestInput(this.value)" onfocus="handleDestInput(this.value)">
+            <div class="autocomplete-list" id="autocompleteList"></div>
+          </div>
+        </div>
+        <button class="search-btn" id="searchBtn" onclick="searchFlights()">
+          <span id="searchBtnText">Search Flights</span>
+          <span id="searchBtnSpinner" style="display:none">&#8987;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Partners -->
+<section class="partner-section" id="partners">
+  <div class="section-header">
+    <h2>Partner Network</h2>
+    <p>Trusted connections across the globe through Jordanian Airlines</p>
+  </div>
+  <div class="partner-grid" id="partnerGrid"></div>
+</section>
+
+<!-- Results -->
+<section class="results-section" id="resultsSection">
+  <div class="results-header">
+    <div>
+      <h2 id="resultsTitle">Flights</h2>
+      <span class="results-count" id="resultsCount"></span>
+    </div>
+    <div class="sort-controls">
+      <button class="sort-btn active" onclick="sortFlights('price',this)">Price</button>
+      <button class="sort-btn" onclick="sortFlights('duration',this)">Duration</button>
+      <button class="sort-btn" onclick="sortFlights('seats',this)">Availability</button>
+    </div>
+  </div>
+  <div class="loader" id="loader">
+    <div class="loader-spinner"></div>
+    <p>Searching for the best flights...</p>
+  </div>
+  <div id="flightResults"></div>
+  <div class="empty-state" id="emptyState" style="display:none">
+    <div class="icon">&#128270;</div>
+    <h3>No flights found</h3>
+    <p>Try searching for a different destination</p>
+  </div>
+</section>
+
+<!-- Booking Modal -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modalTitle">Book Your Flight</h2>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="steps-bar">
+        <div class="step-item active" data-step="1"><span class="step-num">1</span><div class="step-label">Date</div></div>
+        <div class="step-item" data-step="2"><span class="step-num">2</span><div class="step-label">Seat</div></div>
+        <div class="step-item" data-step="3"><span class="step-num">3</span><div class="step-label">Details</div></div>
+        <div class="step-item" data-step="4"><span class="step-num">4</span><div class="step-label">Ticket</div></div>
+      </div>
+
+      <!-- Step 1: Date -->
+      <div class="step-content active" id="step1">
+        <div class="calendar" id="calendar"></div>
+      </div>
+
+      <!-- Step 2: Seat -->
+      <div class="step-content" id="step2">
+        <div class="plane-container">
+          <div class="plane-header">
+            <h3>Select Your Seat</h3>
+            <div class="plane-legend">
+              <span><span class="legend-dot available"></span> Available</span>
+              <span><span class="legend-dot selected"></span> Selected</span>
+              <span><span class="legend-dot occupied"></span> Occupied</span>
+            </div>
+          </div>
+          <div class="plane-body">
+            <div class="plane-nose">FRONT</div>
+            <div id="seatGrid"></div>
+          </div>
+          <div class="selected-seat-info" id="seatInfo" style="display:none">Selected: --</div>
+        </div>
+      </div>
+
+      <!-- Step 3: Details -->
+      <div class="step-content" id="step3">
+        <div class="passenger-form">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="paxName" placeholder="Enter your full name">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="paxEmail" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label>Passport Number</label>
+            <input type="text" id="paxPassport" placeholder="e.g. A12345678">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Boarding Pass -->
+      <div class="step-content" id="step4">
+        <div class="boarding-pass" id="boardingPass"></div>
+        <button class="bp-download" onclick="downloadBoardingPass()">Download Boarding Pass</button>
+      </div>
+    </div>
+    <div class="modal-footer" id="modalFooter">
+      <button class="btn-back" id="btnBack" onclick="prevStep()" style="visibility:hidden">Back</button>
+      <button class="btn-next" id="btnNext" onclick="nextStep()">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">TRIPLE M FOR <span>FLYING</span></div>
+    <div class="footer-links">
+      <a href="#">About</a>
+      <a href="#">Safety</a>
+      <a href="#">Careers</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-disclaimer">This is a fictional airline for demonstration purposes only. No real bookings or payments. All data is simulated.</div>
+  </div>
+</footer>
+
+<script>
+// ===== DATA =====
+const DESTINATIONS = [
+  {city:"London",code:"LHR",country:"United Kingdom",region:"Europe",basePrice:389,duration:"5h 30m",flag:"\u{1F1EC}\u{1F1E7}"},
+  {city:"Paris",code:"CDG",country:"France",region:"Europe",basePrice:345,duration:"5h 10m",flag:"\u{1F1EB}\u{1F1F7}"},
+  {city:"Berlin",code:"BER",country:"Germany",region:"Europe",basePrice:312,duration:"4h 45m",flag:"\u{1F1E9}\u{1F1EA}"},
+  {city:"Rome",code:"FCO",country:"Italy",region:"Europe",basePrice:298,duration:"4h 20m",flag:"\u{1F1EE}\u{1F1F9}"},
+  {city:"Istanbul",code:"IST",country:"Turkey",region:"Middle East",basePrice:245,duration:"2h 30m",flag:"\u{1F1F9}\u{1F1F7}"},
+  {city:"Dubai",code:"DXB",country:"UAE",region:"Middle East",basePrice:265,duration:"3h 00m",flag:"\u{1F1E6}\u{1F1EA}"},
+  {city:"Cairo",code:"CAI",country:"Egypt",region:"Middle East",basePrice:198,duration:"1h 45m",flag:"\u{1F1EA}\u{1F1F2}"},
+  {city:"New York",code:"JFK",country:"USA",region:"North America",basePrice:589,duration:"12h 15m",flag:"\u{1F1FA}\u{1F1F8}"},
+  {city:"Los Angeles",code:"LAX",country:"USA",region:"North America",basePrice:645,duration:"14h 30m",flag:"\u{1F1FA}\u{1F1F8}"},
+  {city:"Chicago",code:"ORD",country:"USA",region:"North America",basePrice:612,duration:"13h 00m",flag:"\u{1F1FA}\u{1F1F8}"},
+  {city:"Tokyo",code:"NRT",country:"Japan",region:"Asia",basePrice:720,duration:"11h 45m",flag:"\u{1F1EF}\u{1F1F5}"},
+  {city:"Bangkok",code:"BKK",country:"Thailand",region:"Asia",basePrice:548,duration:"8h 30m",flag:"\u{1F1F9}\u{1F1ED}"},
+  {city:"Singapore",code:"SIN",country:"Singapore",region:"Asia",basePrice:598,duration:"9h 15m",flag:"\u{1F1F8}\u{1F1EC}"},
+  {city:"Kuala Lumpur",code:"KUL",country:"Malaysia",region:"Asia",basePrice:510,duration:"8h 50m",flag:"\u{1F1F2}\u{1F1FE}"},
+  {city:"Barcelona",code:"BCN",country:"Spain",region:"Europe",basePrice:310,duration:"5h 00m",flag:"\u{1F1EA}\u{1F1F8}"},
+  {city:"Amsterdam",code:"AMS",country:"Netherlands",region:"Europe",basePrice:335,duration:"5h 20m",flag:"\u{1F1F3}\u{1F1F1}"},
+  {city:"Vienna",code:"VIE",country:"Austria",region:"Europe",basePrice:305,duration:"4h 30m",flag:"\u{1F1E6}\u{1F1F9}"},
+  {city:"Jeddah",code:"JED",country:"Saudi Arabia",region:"Middle East",basePrice:215,duration:"2h 15m",flag:"\u{1F1F8}\u{1F1E6}"},
+  {city:"Riyadh",code:"RUH",country:"Saudi Arabia",region:"Middle East",basePrice:225,duration:"2h 30m",flag:"\u{1F1F8}\u{1F1E6}"},
+  {city:"Beirut",code:"BEY",country:"Lebanon",region:"Middle East",basePrice:175,duration:"1h 30m",flag:"\u{1F1F1}\u{1F1E8}"},
+  {city:"Muscat",code:"MCT",country:"Oman",region:"Middle East",basePrice:240,duration:"3h 15m",flag:"\u{1F1F4}\u{1F1F2}"},
+  {city:"Doha",code:"DOH",country:"Qatar",region:"Middle East",basePrice:255,duration:"2h 45m",flag:"\u{1F1F6}\u{1F1E6}"},
+  {city:"Mumbai",code:"BOM",country:"India",region:"Asia",basePrice:395,duration:"6h 00m",flag:"\u{1F1EE}\u{1F1F3}"},
+  {city:"Delhi",code:"DEL",country:"India",region:"Asia",basePrice:380,duration:"5h 45m",flag:"\u{1F1EE}\u{1F1F3}"},
+  {city:"Sydney",code:"SYD",country:"Australia",region:"Oceania",basePrice:890,duration:"18h 30m",flag:"\u{1F1E6}\u{1F1FA}"},
+  {city:"Toronto",code:"YYZ",country:"Canada",region:"North America",basePrice:575,duration:"12h 45m",flag:"\u{1F1E6}\u{1F1E8}"},
+  {city:"Athens",code:"ATH",country:"Greece",region:"Europe",basePrice:275,duration:"3h 30m",flag:"\u{1F1EC}\u{1F1F7}"},
+  {city:"Lisbon",code:"LIS",country:"Portugal",region:"Europe",basePrice:340,duration:"6h 00m",flag:"\u{1F1F5}\u{1F1F9}"},
+  {city:"Casablanca",code:"CMN",country:"Morocco",region:"Africa",basePrice:230,duration:"5h 30m",flag:"\u{1F1F2}\u{1F1E6}"},
+  {city:"Nairobi",code:"NBO",country:"Kenya",region:"Africa",basePrice:420,duration:"6h 15m",flag:"\u{1F1F0}\u{1F1EA}"},
+];
+
+const PARTNERS = [
+  {name:"UAE",flag:"\u{1F1E6}\u{1F1EA}",region:"Middle East"},
+  {name:"UK",flag:"\u{1F1EC}\u{1F1E7}",region:"Europe"},
+  {name:"USA",flag:"\u{1F1FA}\u{1F1F8}",region:"North America"},
+  {name:"France",flag:"\u{1F1EB}\u{1F1F7}",region:"Europe"},
+  {name:"Germany",flag:"\u{1F1E9}\u{1F1EA}",region:"Europe"},
+  {name:"Turkey",flag:"\u{1F1F9}\u{1F1F7}",region:"Middle East"},
+  {name:"Italy",flag:"\u{1F1EE}\u{1F1F9}",region:"Europe"},
+  {name:"Egypt",flag:"\u{1F1EA}\u{1F1F2}",region:"Africa"},
+  {name:"Japan",flag:"\u{1F1EF}\u{1F1F5}",region:"Asia"},
+  {name:"Spain",flag:"\u{1F1EA}\u{1F1F8}",region:"Europe"},
+  {name:"Saudi Arabia",flag:"\u{1F1F8}\u{1F1E6}",region:"Middle East"},
+  {name:"India",flag:"\u{1F1EE}\u{1F1F3}",region:"Asia"},
+  {name:"Australia",flag:"\u{1F1E6}\u{1F1FA}",region:"Oceania"},
+  {name:"Canada",flag:"\u{1F1E6}\u{1F1E8}",region:"North America"},
+  {name:"Netherlands",flag:"\u{1F1F3}\u{1F1F1}",region:"Europe"},
+  {name:"Thailand",flag:"\u{1F1F9}\u{1F1ED}",region:"Asia"},
+  {name:"Morocco",flag:"\u{1F1F2}\u{1F1E6}",region:"Africa"},
+  {name:"Greece",flag:"\u{1F1EC}\u{1F1F7}",region:"Europe"},
+  {name:"Lebanon",flag:"\u{1F1F1}\u{1F1E8}",region:"Middle East"},
+  {name:"Qatar",flag:"\u{1F1F6}\u{1F1E6}",region:"Middle East"},
+];
+
+// ===== STATE =====
+let currentFlights = [];
+let selectedDest = null;
+let bookingState = {step:1,flight:null,date:null,seat:null,pax:{name:'',email:'',passport:''}};
+let currentSort = 'price';
+let calendarDate = new Date();
+let viewerIntervals = [];
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  renderPartners();
+  setupScrollHeader();
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-field')) {
+      document.getElementById('autocompleteList').classList.remove('active');
+    }
+  });
+});
+
+function setupScrollHeader() {
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 50);
+  });
+}
+
+function toggleNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+function scrollToSearch() {
+  document.getElementById('destInput').focus();
+}
+
+function goHome() {
+  document.getElementById('resultsSection').classList.remove('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===== PARTNERS =====
+function renderPartners() {
+  const grid = document.getElementById('partnerGrid');
+  grid.innerHTML = PARTNERS.map(p => `
+    <div class="partner-card">
+      <span class="partner-flag">${p.flag}</span>
+      <div class="partner-name">${p.name}</div>
+      <div class="partner-region">${p.region}</div>
+    </div>
+  `).join('');
+}
+
+// ===== AUTOCOMPLETE =====
+function handleDestInput(val) {
+  const list = document.getElementById('autocompleteList');
+  const query = val.trim().toLowerCase();
+  if (!query) { list.classList.remove('active'); return; }
+
+  const matches = DESTINATIONS.filter(d =>
+    d.city.toLowerCase().includes(query) ||
+    d.country.toLowerCase().includes(query) ||
+    d.code.toLowerCase().includes(query) ||
+    d.region.toLowerCase().includes(query)
+  ).slice(0, 8);
+
+  if (!matches.length) {
+    list.innerHTML = '<div style="padding:16px;color:var(--text-muted);font-size:13px">No destinations found</div>';
+    list.classList.add('active');
+    return;
+  }
+
+  list.innerHTML = matches.map(d => `
+    <div class="autocomplete-item" onclick="selectDest(${DESTINATIONS.indexOf(d)})">
+      <span style="font-size:24px">${d.flag}</span>
+      <div>
+        <div class="city-name">${d.city} (${d.code})</div>
+        <div class="country-name">${d.country}</div>
+      </div>
+      <span class="region-tag">${d.region}</span>
+    </div>
+  `).join('');
+  list.classList.add('active');
+}
+
+function selectDest(idx) {
+  selectedDest = DESTINATIONS[idx];
+  document.getElementById('destInput').value = `${selectedDest.city} (${selectedDest.code})`;
+  document.getElementById('autocompleteList').classList.remove('active');
+}
+
+// ===== SEARCH =====
+function searchFlights() {
+  const input = document.getElementById('destInput').value.trim();
+  if (!input) {
+    document.getElementById('destInput').focus();
+    return;
+  }
+
+  // Find matching destinations
+  const query = input.toLowerCase();
+  let matches = DESTINATIONS.filter(d =>
+    d.city.toLowerCase().includes(query) ||
+    d.country.toLowerCase().includes(query) ||
+    d.code.toLowerCase().includes(query) ||
+    d.region.toLowerCase().includes(query) ||
+    input.toLowerCase() === 'all'
+  );
+
+  if (!matches.length) {
+    matches = DESTINATIONS;
+  }
+
+  // Show results section
+  const resultsSection = document.getElementById('resultsSection');
+  resultsSection.classList.add('active');
+
+  // Show loader
+  document.getElementById('loader').classList.add('active');
+  document.getElementById('flightResults').innerHTML = '';
+  document.getElementById('emptyState').style.display = 'none';
+
+  // Animate search button
+  const btn = document.getElementById('searchBtn');
+  btn.classList.add('loading');
+  document.getElementById('searchBtnText').textContent = 'Searching...';
+  document.getElementById('searchBtnSpinner').style.display = 'inline';
+
+  // Clear old viewer intervals
+  viewerIntervals.forEach(clearInterval);
+  viewerIntervals = [];
+
+  // Simulate search delay
+  setTimeout(() => {
+    btn.classList.remove('loading');
+    document.getElementById('searchBtnText').textContent = 'Search Flights';
+    document.getElementById('searchBtnSpinner').style.display = 'none';
+    document.getElementById('loader').classList.remove('active');
+
+    // Generate flights with price fluctuation
+    currentFlights = generateFlights(matches);
+    sortFlights(currentSort);
+
+    // Scroll to results
+    resultsSection.scrollIntoView({behavior:'smooth',block:'start'});
+  }, 1200 + Math.random() * 800);
+}
+
+function generateFlights(destinations) {
+  return destinations.map(d => {
+    const priceFluctuation = (Math.random() - 0.5) * 60;
+    const price = Math.round(d.basePrice + priceFluctuation);
+    const seats = Math.floor(Math.random() * 30) + 2;
+    const viewers = Math.floor(Math.random() * 24) + 3;
+    const flightNum = 'MM' + (100 + Math.floor(Math.random() * 900));
+    const departure = `${String(6 + Math.floor(Math.random()*12)).padStart(2,'0')}:${String(Math.floor(Math.random()*60)).padStart(2,'0')}`;
+    return {
+      ...d,
+      price: Math.max(price, 99),
+      seats,
+      viewers,
+      flightNum,
+      departure,
+      id: d.code + '-' + flightNum
+    };
+  });
+}
+
+// ===== SORT =====
+function sortFlights(by, btnEl) {
+  currentSort = by;
+
+  // Update sort buttons
+  if (btnEl) {
+    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+    btnEl.classList.add('active');
+  }
+
+  if (!currentFlights.length) return;
+
+  switch(by) {
+    case 'price': currentFlights.sort((a,b) => a.price - b.price); break;
+    case 'duration': currentFlights.sort((a,b) => parseDuration(a.duration) - parseDuration(b.duration)); break;
+    case 'seats': currentFlights.sort((a,b) => b.seats - a.seats); break;
+  }
+
+  renderFlights();
+}
+
+function parseDuration(d) {
+  const h = d.match(/(\d+)h/); const m = d.match(/(\d+)m/);
+  return (h ? parseInt(h[1]) * 60 : 0) + (m ? parseInt(m[1]) : 0);
+}
+
+// ===== RENDER FLIGHTS =====
+function renderFlights() {
+  const container = document.getElementById('flightResults');
+  const emptyState = document.getElementById('emptyState');
+
+  if (!currentFlights.length) {
+    container.innerHTML = '';
+    emptyState.style.display = 'block';
+    return;
+  }
+
+  emptyState.style.display = 'none';
+  const bestPrice = Math.min(...currentFlights.map(f => f.price));
+
+  document.getElementById('resultsTitle').textContent = `Flights from Amman`;
+  document.getElementById('resultsCount').textContent = `${currentFlights.length} destinations found`;
+
+  container.innerHTML = currentFlights.map((f, i) => {
+    const isBest = f.price === bestPrice;
+    const seatsClass = f.seats <= 5 ? 'low' : f.seats <= 12 ? 'medium' : 'high';
+    const seatsText = f.seats <= 5 ? `${f.seats} seats left - book now!` : `${f.seats} seats available`;
+    return `
+      <div class="flight-card animate-in ${isBest ? 'best-price' : ''}" style="animation-delay:${i * 0.05}s">
+        <div class="flight-main">
+          <div class="flight-route">
+            <div class="flight-dest">${f.flag} ${f.city}</div>
+            <div class="flight-dest-sub">${f.country} &middot; ${f.code}</div>
+          </div>
+          <div class="flight-details">
+            <div class="flight-detail">
+              <div class="label">Flight</div>
+              <div class="value">${f.flightNum}</div>
+            </div>
+            <div class="flight-detail">
+              <div class="label">Depart</div>
+              <div class="value">${f.departure}</div>
+            </div>
+            <div class="flight-detail">
+              <div class="label">Duration</div>
+              <div class="value">${f.duration}</div>
+            </div>
+          </div>
+          <div class="flight-price-col">
+            <div class="flight-price">$${f.price}</div>
+            <div class="flight-price-note">per person</div>
+          </div>
+        </div>
+        <div class="flight-meta">
+          <div class="viewers-counter">
+            <span class="eye">&#128064;</span>
+            <span id="viewers-${i}">${f.viewers} people viewing</span>
+          </div>
+          <span class="seats-badge ${seatsClass}">${seatsText}</span>
+          <button class="book-btn" onclick="startBooking('${f.id}')">Select Flight</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Start viewer counters
+  currentFlights.forEach((f, i) => {
+    const interval = setInterval(() => {
+      const change = Math.random() > 0.5 ? 1 : -1;
+      f.viewers = Math.max(1, f.viewers + change);
+      const el = document.getElementById(`viewers-${i}`);
+      if (el) el.textContent = `${f.viewers} people viewing`;
+    }, 3000 + Math.random() * 5000);
+    viewerIntervals.push(interval);
+  });
+}
+
+// ===== BOOKING =====
+function startBooking(flightId) {
+  const flight = currentFlights.find(f => f.id === flightId);
+  if (!flight) return;
+
+  bookingState = {step:1, flight, date:null, seat:null, pax:{name:'',email:'',passport:''}};
+  openModal();
+  updateStepUI();
+  renderCalendar();
+}
+
+function openModal() {
+  document.getElementById('bookingModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('bookingModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function updateStepUI() {
+  const step = bookingState.step;
+
+  // Update step indicators
+  document.querySelectorAll('.step-item').forEach(el => {
+    const s = parseInt(el.dataset.step);
+    el.classList.remove('active','completed');
+    if (s < step) el.classList.add('completed');
+    else if (s === step) el.classList.add('active');
+  });
+
+  // Show current step content
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById(`step${i}`).classList.toggle('active', i === step);
+  }
+
+  // Update buttons
+  const btnBack = document.getElementById('btnBack');
+  const btnNext = document.getElementById('btnNext');
+  const modalFooter = document.getElementById('modalFooter');
+
+  btnBack.style.visibility = step === 1 ? 'hidden' : 'visible';
+
+  if (step === 4) {
+    btnNext.style.display = 'none';
+  } else {
+    btnNext.style.display = '';
+    btnNext.textContent = step === 3 ? 'Confirm Booking' : 'Continue';
+  }
+
+  // Update modal title
+  const titles = ['Select Date','Choose Your Seat','Passenger Details','Boarding Pass'];
+  document.getElementById('modalTitle').textContent = titles[step - 1];
+
+  // Validate next button
+  validateNextBtn();
+}
+
+function validateNextBtn() {
+  const btnNext = document.getElementById('btnNext');
+  const step = bookingState.step;
+  let disabled = false;
+
+  if (step === 1) disabled = !bookingState.date;
+  else if (step === 2) disabled = !bookingState.seat;
+  else if (step === 3) {
+    disabled = !document.getElementById('paxName').value.trim() ||
+               !document.getElementById('paxEmail').value.trim() ||
+               !document.getElementById('paxPassport').value.trim();
+  }
+
+  btnNext.disabled = disabled;
+}
+
+function nextStep() {
+  const step = bookingState.step;
+
+  if (step === 1 && !bookingState.date) return;
+  if (step === 2 && !bookingState.seat) return;
+  if (step === 3) {
+    bookingState.pax.name = document.getElementById('paxName').value.trim();
+    bookingState.pax.email = document.getElementById('paxEmail').value.trim();
+    bookingState.pax.passport = document.getElementById('paxPassport').value.trim();
+    if (!bookingState.pax.name || !bookingState.pax.email || !bookingState.pax.passport) return;
+    renderBoardingPass();
+  }
+
+  bookingState.step = Math.min(step + 1, 4);
+  updateStepUI();
+
+  if (bookingState.step === 2) renderSeats();
+}
+
+function prevStep() {
+  bookingState.step = Math.max(bookingState.step - 1, 1);
+  updateStepUI();
+  if (bookingState.step === 1) renderCalendar();
+}
+
+// ===== CALENDAR =====
+function renderCalendar() {
+  const date = new Date(calendarDate);
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const dayNames = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+  let html = `
+    <div class="calendar-header">
+      <button class="cal-nav" onclick="changeMonth(-1)">&larr;</button>
+      <h3>${monthNames[month]} ${year}</h3>
+      <button class="cal-nav" onclick="changeMonth(1)">&rarr;</button>
+    </div>
+    <div class="calendar-grid">
+  `;
+
+  dayNames.forEach(d => { html += `<div class="cal-day-header">${d}</div>`; });
+
+  // Previous month days
+  for (let i = firstDay - 1; i >= 0; i--) {
+    html += `<div class="cal-day other-month">${daysInPrevMonth - i}</div>`;
+  }
+
+  // Current month days
+  for (let d = 1; d <= daysInMonth; d++) {
+    const cellDate = new Date(year, month, d);
+    const isPast = cellDate < today;
+    const isToday = cellDate.getTime() === today.getTime();
+    const isSelected = bookingState.date &&
+      bookingState.date.getDate() === d &&
+      bookingState.date.getMonth() === month &&
+      bookingState.date.getFullYear() === year;
+
+    let cls = 'cal-day';
+    if (isPast) cls += ' past';
+    if (isToday) cls += ' today';
+    if (isSelected) cls += ' selected';
+
+    html += `<div class="${cls}" ${isPast ? '' : `onclick="selectDate(${year},${month},${d})"`}>${d}</div>`;
+  }
+
+  // Next month days
+  const totalCells = firstDay + daysInMonth;
+  const remaining = (7 - (totalCells % 7)) % 7;
+  for (let i = 1; i <= remaining; i++) {
+    html += `<div class="cal-day other-month">${i}</div>`;
+  }
+
+  html += '</div>';
+  document.getElementById('calendar').innerHTML = html;
+}
+
+function changeMonth(dir) {
+  calendarDate.setMonth(calendarDate.getMonth() + dir);
+  if (calendarDate.getMonth() < new Date().getMonth() && calendarDate.getFullYear() <= new Date().getFullYear()) {
+    calendarDate = new Date();
+  }
+  renderCalendar();
+}
+
+function selectDate(y, m, d) {
+  bookingState.date = new Date(y, m, d);
+  renderCalendar();
+  validateNextBtn();
+}
+
+// ===== SEATS =====
+function renderSeats() {
+  const rows = 12;
+  const cols = ['A','B','C','','D','E','F'];
+  const occupiedSeats = new Set();
+
+  // Randomly occupy some seats
+  for (let i = 0; i < 20; i++) {
+    const r = Math.floor(Math.random() * rows) + 1;
+    const c = ['A','B','C','D','E','F'][Math.floor(Math.random() * 6)];
+    occupiedSeats.add(`${r}${c}`);
+  }
+
+  let html = '';
+  for (let r = 1; r <= rows; r++) {
+    html += '<div class="seat-row">';
+    html += `<span class="row-label">${r}</span>`;
+    cols.forEach(c => {
+      if (c === '') {
+        html += '<div class="seat-aisle"></div>';
+      } else {
+        const seatId = `${r}${c}`;
+        const isOccupied = occupiedSeats.has(seatId);
+        const isSelected = bookingState.seat === seatId;
+        let cls = 'seat';
+        if (isOccupied) cls += ' occupied';
+        else if (isSelected) cls += ' selected';
+        html += `<div class="${cls}" onclick="selectSeat('${seatId}',${isOccupied})">${c}</div>`;
+      }
+    });
+    html += '</div>';
+  }
+
+  document.getElementById('seatGrid').innerHTML = html;
+  updateSeatInfo();
+}
+
+function selectSeat(seatId, isOccupied) {
+  if (isOccupied) return;
+  bookingState.seat = seatId;
+  renderSeats();
+  validateNextBtn();
+}
+
+function updateSeatInfo() {
+  const info = document.getElementById('seatInfo');
+  if (bookingState.seat) {
+    info.style.display = 'block';
+    info.textContent = `Selected: Seat ${bookingState.seat}`;
+  } else {
+    info.style.display = 'none';
+  }
+}
+
+// ===== BOARDING PASS =====
+function renderBoardingPass() {
+  const f = bookingState.flight;
+  const d = bookingState.date;
+  const pax = bookingState.pax;
+  const monthNames = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+  const dateStr = `${d.getDate()} ${monthNames[d.getMonth()]} ${d.getFullYear()}`;
+  const gate = String.fromCharCode(65 + Math.floor(Math.random() * 8)) + (1 + Math.floor(Math.random() * 30));
+  const boardingTime = subtractTime(f.departure, 45);
+
+  // Generate barcode lines
+  let barcodeLines = '';
+  for (let i = 0; i < 50; i++) {
+    barcodeLines += '<span></span>';
+  }
+
+  document.getElementById('boardingPass').innerHTML = `
+    <div class="bp-header">
+      <div class="bp-airline">TRIPLE M FOR FLYING</div>
+      <div class="bp-flight-no">${f.flightNum}</div>
+    </div>
+    <div class="bp-body">
+      <div class="bp-row">
+        <div class="bp-field">
+          <div class="bp-label">Passenger</div>
+          <div class="bp-value">${pax.name.toUpperCase()}</div>
+        </div>
+        <div class="bp-field">
+          <div class="bp-label">Flight</div>
+          <div class="bp-value">${f.flightNum}</div>
+        </div>
+      </div>
+      <div class="bp-row">
+        <div class="bp-field">
+          <div class="bp-label">From</div>
+          <div class="bp-value large">AMM</div>
+        </div>
+        <div class="bp-field" style="text-align:center">
+          <div class="bp-label">&nbsp;</div>
+          <div class="bp-value" style="font-size:20px">&#9992;</div>
+        </div>
+        <div class="bp-field" style="text-align:right">
+          <div class="bp-label">To</div>
+          <div class="bp-value large">${f.code}</div>
+        </div>
+      </div>
+      <div class="bp-row">
+        <div class="bp-field">
+          <div class="bp-label">Date</div>
+          <div class="bp-value">${dateStr}</div>
+        </div>
+        <div class="bp-field">
+          <div class="bp-label">Depart</div>
+          <div class="bp-value">${f.departure}</div>
+        </div>
+        <div class="bp-field">
+          <div class="bp-label">Boarding</div>
+          <div class="bp-value">${boardingTime}</div>
+        </div>
+      </div>
+      <hr class="bp-divider">
+      <div class="bp-row">
+        <div class="bp-field">
+          <div class="bp-label">Seat</div>
+          <div class="bp-value large">${bookingState.seat}</div>
+        </div>
+        <div class="bp-field">
+          <div class="bp-label">Gate</div>
+          <div class="bp-value large">${gate}</div>
+        </div>
+        <div class="bp-field">
+          <div class="bp-label">Class</div>
+          <div class="bp-value">Economy</div>
+        </div>
+      </div>
+      <div class="bp-barcode-lines">${barcodeLines}</div>
+      <div class="bp-barcode">${f.flightNum}-${f.code}-${pax.passport.slice(-4)}</div>
+    </div>
+    <div class="bp-footer">
+      TRIPLE M FOR FLYING &middot; Jordanian Airlines Partner &middot; This is a simulated boarding pass
+    </div>
+  `;
+}
+
+function subtractTime(time, minutes) {
+  const [h, m] = time.split(':').map(Number);
+  const total = h * 60 + m - minutes;
+  const newH = Math.floor(total / 60);
+  const newM = total % 60;
+  return `${String(newH).padStart(2,'0')}:${String(newM).padStart(2,'0')}`;
+}
+
+function downloadBoardingPass() {
+  const bp = document.getElementById('boardingPass');
+  const text = bp.innerText;
+  const blob = new Blob([text], {type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `boarding-pass-${bookingState.flight.flightNum}.txt`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ===== FORM VALIDATION =====
+document.addEventListener('input', (e) => {
+  if (['paxName','paxEmail','paxPassport'].includes(e.target.id)) {
+    validateNextBtn();
+  }
+});
+
+// ===== KEYBOARD =====
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Enter' && document.activeElement.id === 'destInput') searchFlights();
+});
+</script>
+</body>
 </html>
