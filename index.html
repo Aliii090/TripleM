@@ -19,28 +19,17 @@ body{
   font-family:'Inter',sans-serif;
   background:radial-gradient(circle at 20% 20%,#1e3a8a,transparent),#020617;
   color:var(--text);
-  overflow-x:hidden;
 }
 
-/* HEADER */
 header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   padding:20px 60px;
 }
-header img{
-  height:50px;
-}
-nav a{
-  margin-left:25px;
-  text-decoration:none;
-  color:var(--muted);
-  transition:0.2s;
-}
-nav a:hover{color:white}
+header img{height:50px}
+nav a{margin-left:25px;text-decoration:none;color:var(--muted)}
 
-/* HERO */
 .hero{
   height:90vh;
   display:flex;
@@ -48,20 +37,11 @@ nav a:hover{color:white}
   justify-content:center;
   align-items:center;
   text-align:center;
-  position:relative;
 }
 
-.hero h1{
-  font-size:3.5rem;
-  margin-bottom:10px;
-  animation:fadeUp 1s ease;
-}
-.hero p{
-  color:var(--muted);
-  animation:fadeUp 1.2s ease;
-}
+.hero h1{font-size:3.5rem}
+.hero p{color:var(--muted)}
 
-/* GLASS SEARCH */
 .search-box{
   margin-top:40px;
   backdrop-filter:blur(20px);
@@ -69,11 +49,10 @@ nav a:hover{color:white}
   padding:15px;
   border-radius:20px;
   display:grid;
-  grid-template-columns:repeat(4,1fr) auto;
+  grid-template-columns:repeat(3,1fr) auto;
   gap:10px;
   width:90%;
-  max-width:900px;
-  animation:fadeUp 1.4s ease;
+  max-width:800px;
 }
 
 .search-box input{
@@ -91,13 +70,8 @@ nav a:hover{color:white}
   border-radius:12px;
   padding:14px;
   cursor:pointer;
-  transition:0.2s;
-}
-.search-box button:hover{
-  transform:scale(1.05);
 }
 
-/* FLIGHTS */
 .flights{
   max-width:1100px;
   margin:60px auto;
@@ -114,24 +88,11 @@ nav a:hover{color:white}
   align-items:center;
   margin-bottom:20px;
   transition:0.3s;
-  animation:fadeUp 0.6s ease;
 }
-.flight-card:hover{
-  transform:translateY(-6px) scale(1.01);
-}
+.flight-card:hover{transform:translateY(-6px)}
 
-.flight-info h3{margin:0}
-.flight-info p{color:var(--muted)}
-
-.price{
-  font-size:1.4rem;
-  font-weight:600;
-}
-
-.badge{
-  color:#f87171;
-  font-size:12px;
-}
+.price{font-size:1.3rem;font-weight:600}
+.badge{color:#f87171;font-size:12px}
 
 .flight-card button{
   background:var(--accent);
@@ -141,7 +102,25 @@ nav a:hover{color:white}
   cursor:pointer;
 }
 
-/* MODAL */
+.partners{
+  text-align:center;
+  margin-top:-60px;
+}
+.partners h3{color:var(--muted)}
+.partner-list{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:15px;
+  margin-top:10px;
+}
+.partner{
+  background:var(--glass);
+  padding:10px 15px;
+  border-radius:12px;
+  font-size:14px;
+}
+
 .modal{
   position:fixed;
   top:0;left:0;
@@ -157,53 +136,38 @@ nav a:hover{color:white}
   padding:30px;
   border-radius:20px;
   text-align:center;
-  width:90%;
-  max-width:400px;
 }
 
-/* SEATS */
-.seat-map{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:8px;
-  margin-top:15px;
-}
-.seat{
-  background:#1f2937;
-  padding:10px;
-  border-radius:6px;
-  cursor:pointer;
-  transition:0.2s;
-}
-.seat:hover{transform:scale(1.1)}
-.seat.selected{background:var(--accent)}
-
-/* ANIMATIONS */
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-/* MOBILE */
 @media(max-width:700px){
   .search-box{grid-template-columns:1fr}
 }
 </style></head><body><header>
-  <img src="Logo.png" alt="Logo">
+  <img src="Logo.png">
   <nav>
     <a href="#">Home</a>
     <a href="#flights">Flights</a>
   </nav>
 </header><section class="hero">
-  <h1>Fly anywhere, effortlessly</h1>
+  <h1>Fly from Amman worldwide</h1>
   <p>TRIPLE M × Jordanian Airlines</p>  <div class="search-box">
-    <input id="from" placeholder="From">
-    <input id="to" placeholder="To">
+    <input value="Amman" disabled>
+    <input id="to" placeholder="Destination">
     <input type="date">
-    <input placeholder="Passengers">
     <button onclick="searchFlights()">Search</button>
   </div>
-</section><section class="flights" id="flights">
+</section><div class="partners">
+  <h3>Partner Destinations</h3>
+  <div class="partner-list">
+    <div class="partner">UAE</div>
+    <div class="partner">UK</div>
+    <div class="partner">France</div>
+    <div class="partner">Germany</div>
+    <div class="partner">USA</div>
+    <div class="partner">Turkey</div>
+    <div class="partner">Italy</div>
+    <div class="partner">Egypt</div>
+  </div>
+</div><section class="flights" id="flights">
   <div id="results"></div>
 </section><div class="modal" id="modal">
   <div class="modal-content">
@@ -213,36 +177,37 @@ nav a:hover{color:white}
   </div>
 </div><script>
 const routes=[
-{from:'Amman',to:'London',price:480},
-{from:'Amman',to:'Dubai',price:220},
-{from:'Amman',to:'Paris',price:420},
-{from:'Dubai',to:'Amman',price:220},
-{from:'London',to:'Amman',price:480}
+{to:'Dubai',price:180},
+{to:'London',price:420},
+{to:'Paris',price:380},
+{to:'Berlin',price:320},
+{to:'New York',price:750},
+{to:'Istanbul',price:160},
+{to:'Rome',price:300},
+{to:'Cairo',price:140}
 ];
 
 function searchFlights(){
   const results=document.getElementById('results');
   results.innerHTML='';
 
-  const from=document.getElementById('from').value.toLowerCase();
   const to=document.getElementById('to').value.toLowerCase();
 
   const filtered=routes.filter(r=>
-    (from===''||r.from.toLowerCase().includes(from)) &&
     (to===''||r.to.toLowerCase().includes(to))
   );
 
   filtered.forEach(r=>{
     const seats=Math.floor(Math.random()*5)+1;
-    const price=r.price+Math.floor(Math.random()*50);
+    const price=r.price+Math.floor(Math.random()*40);
 
     const card=document.createElement('div');
     card.className='flight-card';
 
     card.innerHTML=`
-      <div class="flight-info">
-        <h3>${r.from} → ${r.to}</h3>
-        <p class="price">$${price}</p>
+      <div>
+        <h3>Amman → ${r.to}</h3>
+        <p class="price">$${price} round trip</p>
         <span class="badge">${seats} seats left</span>
       </div>
       <button onclick="openModal()">Select</button>
