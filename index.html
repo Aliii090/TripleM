@@ -1,378 +1,273 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TRIPLE M FOR FLYING</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"><style>
-:root{
-  --bg:#070b18;
-  --panel:#0f172a;
-  --card:#111c33;
-  --primary:#3b82f6;
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#0b1220;
+  --card:#111827;
+  --primary:#2563eb;
   --accent:#22c55e;
   --text:#e5e7eb;
-  --muted:#94a3b8;
-  --danger:#f87171;
+  --muted:#9ca3af;
 }
 
-*{box-sizing:border-box}
-
-body{
+body {
   margin:0;
   font-family:'Inter',sans-serif;
-  background:radial-gradient(circle at 10% 10%,#1d4ed8 0%,transparent 40%),
-             radial-gradient(circle at 90% 20%,#0ea5e9 0%,transparent 40%),
-             var(--bg);
+  background:var(--bg);
   color:var(--text);
-  overflow-x:hidden;
 }
 
 /* HEADER */
-header{
+header {
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  padding:20px 60px;
-  backdrop-filter:blur(10px);
-  background:rgba(0,0,0,0.2);
-  position:sticky;
-  top:0;
-  z-index:10;
+  padding:20px 50px;
 }
-
-header img{height:48px}
-
-nav a{
-  margin-left:22px;
-  color:var(--muted);
-  text-decoration:none;
-  font-weight:500;
-}
-nav a:hover{color:white}
 
 /* HERO */
-.hero{
-  padding:90px 20px 40px;
+.hero {
   text-align:center;
+  padding:60px 20px;
 }
 
-.hero h1{
-  font-size:3.4rem;
-  margin-bottom:10px;
-  animation:fadeUp 0.8s ease;
-}
-.hero p{
-  color:var(--muted);
-  animation:fadeUp 1s ease;
-}
-
-/* SEARCH */
-.search{
-  margin:35px auto;
-  max-width:950px;
+.search-box {
+  margin:20px auto;
   display:grid;
-  grid-template-columns:1.5fr 1fr 1fr auto;
+  grid-template-columns:repeat(4,1fr) auto;
   gap:10px;
-  padding:14px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.04);
-  backdrop-filter:blur(18px);
+  max-width:900px;
 }
 
-.search input{
-  padding:14px;
+.search-box input, .search-box button {
+  padding:12px;
+  border-radius:10px;
   border:none;
-  border-radius:12px;
-  background:#0b1220;
+}
+
+.search-box input {
+  background:var(--card);
   color:white;
 }
 
-.search button{
-  background:linear-gradient(135deg,var(--primary),#2563eb);
-  border:none;
-  border-radius:12px;
+.search-box button {
+  background:var(--primary);
   color:white;
-  font-weight:600;
   cursor:pointer;
-}
-
-/* LIVE ACTIVITY */
-.live{
-  text-align:center;
-  color:var(--muted);
-  margin-top:10px;
-  font-size:13px;
-}
-
-/* PARTNERS */
-.partners{
-  text-align:center;
-  margin-top:40px;
-}
-
-.chips{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:10px;
-  margin-top:10px;
-}
-
-.chip{
-  padding:8px 14px;
-  border-radius:999px;
-  background:rgba(255,255,255,0.05);
-  font-size:13px;
-  color:var(--muted);
 }
 
 /* FLIGHTS */
-.container{
-  max-width:1050px;
-  margin:50px auto;
-  padding:0 20px;
+.flights {
+  max-width:1000px;
+  margin:40px auto;
+  padding:20px;
 }
 
-.card{
-  background:rgba(255,255,255,0.04);
-  backdrop-filter:blur(16px);
-  border:1px solid rgba(255,255,255,0.06);
-  padding:18px;
-  border-radius:18px;
+.flight-card {
+  background:var(--card);
+  padding:20px;
+  border-radius:15px;
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  margin-bottom:14px;
-  transition:0.25s;
-}
-
-.card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(255,255,255,0.15);
-}
-
-.price{
-  font-size:1.4rem;
-  font-weight:700;
-}
-
-.small{
-  font-size:12px;
-  color:var(--muted);
-}
-
-.badge{
-  font-size:12px;
-  color:var(--danger);
-}
-
-.btn{
-  background:var(--accent);
-  border:none;
-  padding:10px 14px;
-  border-radius:12px;
-  cursor:pointer;
-  font-weight:600;
-}
-
-/* CALENDAR */
-.calendar{
-  display:flex;
-  gap:8px;
-  margin-top:12px;
-}
-.day{
-  flex:1;
-  padding:10px;
-  border-radius:10px;
-  background:rgba(255,255,255,0.05);
-  font-size:12px;
-  text-align:center;
-  cursor:pointer;
-}
-.day.active{
-  background:var(--primary);
+  margin-bottom:15px;
 }
 
 /* MODALS */
-.modal{
+.modal {
   position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
+  top:0;left:0;
+  width:100%;height:100%;
   background:rgba(0,0,0,0.7);
+  display:none;
+  justify-content:center;
+  align-items:center;
 }
 
-.box{
-  width:92%;
-  max-width:420px;
-  background:var(--panel);
-  padding:24px;
-  border-radius:18px;
-  text-align:center;
+.modal-content {
+  background:var(--card);
+  padding:25px;
+  border-radius:15px;
+  width:90%;
+  max-width:500px;
 }
 
-.seats{
+/* SEATS */
+.seat-map {
   display:grid;
   grid-template-columns:repeat(6,1fr);
-  gap:6px;
+  gap:8px;
   margin-top:15px;
 }
-.seat{
-  background:#1f2a44;
+
+.seat {
+  background:#1f2937;
   padding:10px;
-  border-radius:8px;
+  text-align:center;
+  border-radius:6px;
   cursor:pointer;
-  font-size:12px;
-}
-.seat.sel{background:var(--accent)}
-
-.ticket{
-  text-align:left;
-  background:#0b1220;
-  padding:16px;
-  border-radius:12px;
-  margin-top:15px;
 }
 
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(18px)}
-  to{opacity:1;transform:translateY(0)}
+.seat.selected {
+  background:var(--accent);
 }
 
-</style></head>
-<body><header>
-  <img src="Logo.png">
-  <nav>
-    <a href="#">Home</a>
-    <a href="#flights">Flights</a>
-  </nav>
-</header><section class="hero">
-  <h1>Investors-grade flight platform</h1>
-  <p>TRIPLE M × Jordanian Airlines — demo system</p>  <div class="search">
-    <input value="Amman" disabled>
-    <input id="to" placeholder="Destination">
+button {
+  cursor:pointer;
+}
+
+/* MOBILE */
+@media(max-width:700px){
+  .search-box {grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2>TRIPLE M ✈️</h2>
+</header>
+
+<section class="hero">
+  <h1>Book smarter flights</h1>
+  <p>TRIPLE M × Jordanian Airlines</p>
+
+  <div class="search-box">
+    <input id="from" placeholder="From">
+    <input id="to" placeholder="To">
     <input type="date">
-    <button onclick="search()">Search</button>
-  </div>  <div class="live" id="live">🔥 18 people viewing flights right now</div>
-</section><div class="partners">
-  <div class="chips">
-    <div class="chip">UAE</div>
-    <div class="chip">UK</div>
-    <div class="chip">USA</div>
-    <div class="chip">France</div>
-    <div class="chip">Germany</div>
-    <div class="chip">Turkey</div>
-    <div class="chip">Italy</div>
-    <div class="chip">Egypt</div>
+    <input placeholder="Passengers">
+    <button onclick="searchFlights()">Search</button>
   </div>
-</div><div class="container" id="results"></div><!-- MODALS --><div class="modal" id="m1">
-  <div class="box">
-    <h3 id="t"></h3>
-    <p id="p"></p>
-    <div class="calendar">
-      <div class="day active">Mon</div>
-      <div class="day">Tue</div>
-      <div class="day">Wed</div>
-      <div class="day">Thu</div>
-      <div class="day">Fri</div>
-    </div>
-    <button class="btn" onclick="seat()">Choose Seat</button>
+</section>
+
+<section class="flights">
+  <div id="results"></div>
+</section>
+
+<!-- STEP 1: FLIGHT DETAILS -->
+<div class="modal" id="detailsModal">
+  <div class="modal-content">
+    <h2 id="flightTitle"></h2>
+    <p id="flightPrice"></p>
+    <button onclick="openSeats()">Continue</button>
   </div>
-</div><div class="modal" id="m2">
-  <div class="box">
-    <h3>Select Seat</h3>
-    <div class="seats" id="seats"></div>
-    <button class="btn" onclick="ticket()">Confirm</button>
+</div>
+
+<!-- STEP 2: SEAT SELECTION -->
+<div class="modal" id="seatModal">
+  <div class="modal-content">
+    <h2>Select your seat</h2>
+    <div class="seat-map" id="seatMap"></div>
+    <button onclick="openPayment()">Continue</button>
   </div>
-</div><div class="modal" id="m3">
-  <div class="box">
-    <h3>Boarding Pass</h3>
-    <div class="ticket" id="ticket"></div>
-    <button class="btn" onclick="closeAll()">Done</button>
+</div>
+
+<!-- STEP 3: PAYMENT -->
+<div class="modal" id="paymentModal">
+  <div class="modal-content">
+    <h2>Payment</h2>
+    <p>This is a demo checkout.</p>
+    <button onclick="finishBooking()">Confirm</button>
   </div>
-</div><script>
-const data=[
-{to:"Dubai",price:180},{to:"London",price:420},{to:"Paris",price:380},
-{to:"Berlin",price:320},{to:"New York",price:750},{to:"Istanbul",price:160}
+</div>
+
+<script>
+const routes = [
+  {from:'Amman',to:'London',price:480},
+  {from:'Amman',to:'Dubai',price:220},
+  {from:'Paris',to:'Amman',price:420},
+  {from:'New York',to:'Amman',price:850}
 ];
 
-let current=null;
-let seat="";
+let selectedFlight = null;
 
-function search(){
-  const r=document.getElementById("results");
-  const to=document.getElementById("to").value.toLowerCase();
-  r.innerHTML="";
+function searchFlights(){
+  const results = document.getElementById('results');
+  results.innerHTML = '';
 
-  data.filter(x=>!to||x.to.toLowerCase().includes(to)).forEach(x=>{
-    const price=x.price+Math.floor(Math.random()*40);
-    const d=document.createElement("div");
-    d.className="card";
-    d.innerHTML=`
+  const from = document.getElementById('from').value.toLowerCase();
+  const to = document.getElementById('to').value.toLowerCase();
+
+  const filtered = routes.filter(r =>
+    (from==='' || r.from.toLowerCase().includes(from)) &&
+    (to==='' || r.to.toLowerCase().includes(to))
+  );
+
+  filtered.forEach(r=>{
+    const price = r.price + Math.floor(Math.random()*80);
+
+    const card = document.createElement('div');
+    card.className='flight-card';
+
+    card.innerHTML = `
       <div>
-        <div><b>Amman → ${x.to}</b></div>
-        <div class="small">Direct • Jordanian Airlines</div>
-        <div class="badge">limited seats</div>
+        <h3>${r.from} → ${r.to}</h3>
+        <p>$${price}</p>
       </div>
-      <div style="text-align:right">
-        <div class="price">$${price}</div>
-        <button class="btn" onclick='open1("${x.to}",${price})'>Book</button>
-      </div>
+      <button onclick="selectFlight('${r.from}','${r.to}',${price})">Select</button>
     `;
-    r.appendChild(d);
+
+    results.appendChild(card);
   });
 }
 
-function open1(to,price){
-  current={to,price};
-  document.getElementById("t").innerText=`Amman → ${to}`;
-  document.getElementById("p").innerText=`$${price} estimated fare`;
-  document.getElementById("m1").style.display="flex";
+function selectFlight(from,to,price){
+  selectedFlight = {from,to,price};
+
+  document.getElementById('flightTitle').innerText = `${from} → ${to}`;
+  document.getElementById('flightPrice').innerText = `$${price}`;
+
+  openModal('detailsModal');
 }
 
-function seat(){
-  document.getElementById("m1").style.display="none";
-  const s=document.getElementById("seats");
-  s.innerHTML="";
+function openSeats(){
+  closeAll();
+  generateSeats();
+  openModal('seatModal');
+}
 
-  for(let i=1;i<=24;i++){
-    const d=document.createElement("div");
-    d.className="seat";
-    d.innerText=i;
-    d.onclick=()=>{
-      document.querySelectorAll(".seat").forEach(x=>x.classList.remove("sel"));
-      d.classList.add("sel");
-      seat=i;
+function generateSeats(){
+  const map = document.getElementById('seatMap');
+  map.innerHTML = '';
+
+  for(let i=0;i<30;i++){
+    const seat = document.createElement('div');
+    seat.className='seat';
+    seat.innerText = i+1;
+
+    seat.onclick = ()=>{
+      seat.classList.toggle('selected');
     };
-    s.appendChild(d);
-  }
 
-  document.getElementById("m2").style.display="flex";
+    map.appendChild(seat);
+  }
 }
 
-function ticket(){
-  document.getElementById("m2").style.display="none";
-  document.getElementById("m3").style.display="flex";
+function openPayment(){
+  closeAll();
+  openModal('paymentModal');
+}
 
-  document.getElementById("ticket").innerHTML=`
-    <b>TRIPLE M AIR</b><br><br>
-    Route: Amman → ${current.to}<br>
-    Seat: ${seat}<br>
-    Price: $${current.price}<br>
-    Status: DEMO
-  `;
+function finishBooking(){
+  alert('Booking complete (demo)');
+  closeAll();
+}
+
+function openModal(id){
+  document.getElementById(id).style.display='flex';
 }
 
 function closeAll(){
-  document.querySelectorAll(".modal").forEach(m=>m.style.display="none");
+  document.querySelectorAll('.modal').forEach(m=>m.style.display='none');
 }
+</script>
 
-setInterval(()=>{
-  document.getElementById("live").innerText=
-  `🔥 ${10+Math.floor(Math.random()*30)} people viewing flights right now`;
-},4000);
-
-</script></body>
+</body>
 </html>
